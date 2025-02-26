@@ -1,0 +1,314 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+
+
+<main class="container border m-2 shadow-sm mx-auto rounded"> 
+
+
+    <div id="getPdf" class="col-12">
+        <div class="container mt-3">
+       <div class="row">
+            <div class="col-md-2 d-none d-sm-block d-sm-none d-md-block text-center">
+                <img src="{% static 'src/image/logo.jpg' %}" alt="logo" width="110px" height="130px">
+            </div>
+            <div class="col-md-10 col-sm-12 text-center">
+                <h3 style="font-weight:bolder;">ইমেজ পলিটেকনিক ইন্সটিটিউট, রংপুর</h3>
+                <span style="font-weight:bolder;">ইমেজ টাওয়ার, খামার মোড়, কলেজ রোড, রংপুর।</span><br>
+                <span style="font-weight:bolder;">যোগাযোগঃ ০১৭০৪১৯৬১৫০, ০১৭৫৫০৬৭২১০</span>
+
+                <p style="color:green; font-weight:bolder;font-size: 15px;">কারিগরি শিক্ষা অধিদপ্তর এর স্টাইপেন্ড MIS সফটওয়্যারে উপবৃত্তির জন্য শিক্ষার্থী আবেদন ফরম
+                    (SAF)</p>
+            </div>
+       </div>
+        
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+            
+                    <tr>
+                        <th rowspan="3" width="10%">
+                            <div class="d-flex flex-column justify-content-center align-items-center" style="width: 110px; height: 130px;">
+                            {% if student.applicantPhoto %}
+                                <img src="/media/{{ student.applicantPhoto }}" alt="ছবি" class="img-fluid mx-auto d-block">
+                            {% else %}
+                                <div>
+                                    <i class="fa-regular fa-image text-primary fa-xl"></i>
+                                </div>
+                                <div>
+                                    Image hear
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        </th>
+                        <th colspan="3">
+                        ব্যক্তিগত তথ্য 
+                        </th>
+                        <th colspan="2">
+                            Registration No. {{ student.regNo|stringformat:"05d" }}
+                        </th>
+                    </tr>
+                
+            
+                    <tr>
+                        
+                        <th>শিক্ষার্থীর নাম (বাংলা)</th>
+                        <th>শিক্ষার্থীর নাম (ইংরেজি)</th>
+                        <th>জন্ম সনদের নম্বর</th>
+                        <th>জন্ম তারিখ</th>
+                        <th>জেন্ডার</th>
+                        
+                    </tr>
+                    <tr>
+                        
+                        <td> {{ student.name }} </td>
+                        <td> {{student.nameEng}} </td>
+                        <td> {{ student.birthCertNo }} </td>
+                        <td> {{ student.dob }} </td>
+                        <td> {{ student.sex }} </td>
+                        
+                    </tr>
+                    <tr>
+                        <th>সম্পর্ক</th>
+                        <th>নাম (বাংলা)</th>
+                        <th>নাম (ইংরেজি)</th>
+                        <th>এনআইডি নম্বর</th>
+                        <th>জন্ম তারিখ</th>
+                        <th>মোবাইল নং</th>
+                    </tr>
+                    <tr>
+                        <td>পিতা</td>
+                        <td> {{student.fatherName}} </td>
+                        <td> {{student.fatherNameEng}} </td>
+                        <td> {{ student.fatherNID }} </td>
+                        <td> {{ student.fatherDob }} </td>
+                        <td> {{ student.fatherMobile }} </td>
+                    </tr>
+                    <tr>
+                        <td>মাতা</td>
+                        <td> {{ student.motherName }} </td>
+                        <td> {{ student.motherNameEng }} </td>
+                        <td> {{ student.motherNID }} </td>
+                        <td> {{ student.motherDob }} </td>
+                        <td> {{ student.motherMobile }} </td>
+                    </tr>
+                    <!-- <tr>
+                        <td>মাতা</td>
+                        <td>রাজিয়া বেগম</td>
+                        <td>Razia Begum</td>
+                        <td>9458904350</td>
+                        <td>11-01-1940</td>
+                        <td>019833232323</td>
+                    </tr> -->
+                    <tr>
+                        <th>ঠিকানা</th>
+                        <th colspan="3">বিভাগ/জেলা/উপজেলা,পৌরসভা/ইউনিয়ন/সিটি কর্পোরেশন,পোস্ট কোড</th>
+                        <th colspan="2">ঠিকানা/গ্রাম</th>
+                    </tr>
+                    <tr>
+                        <td> <b> স্থায়ী </b> </td>
+                        <td colspan="3">{{ student.permanentUpozila }}, {{ student.permanentDist }}</td>
+                        <td colspan="2"> {{ student.permanentVill }} </td>
+                    </tr>
+                    <tr>
+                        <td> <b> অস্থায়ী </b> </td>
+                        <td colspan="3">{{student.presentUpozila}}, {{ student.presentDist }} </td>
+                        <td colspan="2"> {{student.presentVill}} </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">পূর্ববর্তী শিক্ষা তথ্য</th>
+                        <th colspan="2">বর্তমান শিক্ষা তথ্য</th>
+                        <th colspan="2">যোগ্যতার শর্ত এবং সংযুক্তি</th>
+                    </tr>
+                    <tr>
+                        <th>বিভাগ/জেলা/উপজেলা</th>
+                        <td> {{ student.prevEduUpozila }}, {{ student.prevEduDist }} </td>
+                        <th>বিভাগ/জেলা/উপজেলা</th>
+                        <td> {{ student.prevEduUpozila }}, {{ student.prevEduDist }} </td>
+                        <th>পড়াশোনার খরচ বহন করবে কে?</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>প্রতিষ্ঠানের নাম</th>
+                        <td> {{ student.prevEduInst }} </td>
+                        <th>প্রতিষ্ঠানের নাম</th>
+                        <td> {{ student.presentEduInstitute }} </td>
+                        <th>আবেদনকারী কি বাংলাদেশের কোন ক্ষুদ্র নৃগোষ্ঠীর অন্তর্ভুক্ত?</th>
+                        <td> {{ student.nrigosti }} </td>
+                    </tr>
+                    <tr>
+                        <th>বোর্ড</th>
+                        <td> {{ student.prevEduBoard }} </td>
+                        <th>শ্রেণী/পর্ব</th>
+                        <td> {{ student.presentEduSem }} </td>
+                        <th>আবেদনকারী কি মুক্তিযোদ্ধা পরিবারের সন্তান (মুক্তিযোদ্ধা প্রজন্ম)?</th>
+                        <td> {{ student.freedomFighter }} </td>
+                    </tr>
+                    <tr>
+                        <th>উত্তীর্ণ হওয়ার বছর</th>
+                        <td> {{student.prevEduPassYear}} </td>
+                        <th></th>
+                        <td></td>
+                        <th>আবেদনকারী কি অন্য কোন উৎস হতে বৃত্তি/উপবৃত্তি পান?</th>
+                        <td> {{ student.otherScholar }} </td>
+                    </tr>
+                    <tr>
+                        <th>টেকনোলজি/ট্রেড</th>
+                        <td> {{ student.prevEduTech }} </td>
+                        <th>টেকনোলজি/ট্রেড</th>
+                        <td> {{ student.presentEduTech }} </td>
+                        <th>আবেদনকারীর কি কোন শারীরিক প্রতিবন্ধকতা আছে?</th>
+                        <td> {{ student.protibondhi }} </td>
+                    </tr>
+                    <tr>
+                        <th>পূর্ববর্তী পরীক্ষার নাম </th> <!--রেজিস্ট্রেশন-->
+                        <td> {{ student.prevEduExam }} </td>
+                        <th>শিফট এবং গ্রুপ সেশন</th>
+                        <td> {{ student.presentEduShift }} </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>রেজিস্ট্রেশন</th>
+                        <td> {{ student.prevEduReg }} </td>
+                        <th>সেশন</th>
+                        <td> {{ student.presentEduSession }} </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>রোল</th>
+                        <td> {{ student.prevEduRoll }} </td>
+                        <th>রোল</th>
+                        <td> {{ student.presentEduRoll }} </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>জি পি এ</th>
+                        <td> {{ student.prevEduResult }} </td>
+                        <th></th>
+                        <td></td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th class="text-center" colspan="2">ব্যাংকিং</th>
+                        <th class="text-center" colspan="2">মোবাইল ব্যাংকিং</th>
+                        <th class="text-center" colspan="2">অ্যাকাউন্টধারীর তথ্য</th>
+                    </tr>
+                    <tr>
+                        <th>ব্যাংক নির্বাচন করুন </th>
+                        <td> {{ payment.paymentBankName }} </td>
+                        <th>মোবাইল ব্যাংকিং সেবা দানকারী প্রতিষ্ঠানের নাম  </th>
+                        <td> {{payment.paymentMobileBankName}} </td>
+                        <th>অ্যাকাউন্টধারীর নাম</th>
+                        <td> {{ payment.paymentAccountName }} </td>
+                    </tr>
+                    <tr>
+                        <th>শাখা নির্বাচন করুন</th>
+                        <td> {{ payment.paymentBankBranch }} </td>
+                        <th>মোবাইল ব্যাংকিং সরবরাহকারী</th>
+                        <td>  </td>
+                        <th>অ্যাকাউন্টধারীর এনআইডি নম্বর</th>
+                        <td> {{ payment.paymentAccountNID }} </td>
+                    </tr>
+                    <tr>
+                        <th>রাউটিং নম্বর</th>
+                        <td> <span class="text-muted">Automated by MIS</span> </td>
+                        <th>রাউটিং নম্বর</th>
+                        <td> <span class="text-muted">Automated by MIS</span> </td>
+                        <th>অ্যাকাউন্ট নম্বর</th>
+                        <td> {{payment.paymentAccountNo}} </td>
+                    </tr>
+                    <tr>
+                        <th>অ্যাকাউন্টের ধরণ</th>
+                        <td> 
+                            {% if payment.paymentType == 'ব্যাংকিং' %}
+                                {{ payment.bankAccountType }}
+                            {% endif %}
+                        </td>
+                        <th>ফাইল</th>
+                        <td colspan="3">
+                            
+                        </td>
+                        <!-- <th></th>
+                        <td></td> -->
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="text-success">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <p>এই ফর্মের সকল তথ্য আমার দ্বারা পূরণ করা হয়েছে এবং সকল তথ্য সঠিক আছে</p>
+                            </div>
+                        </th>
+                        <th colspan="2">Applicant<br>Signature: </th> 
+                    </tr>
+            </table>
+            <div class="text-center">
+                    
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>
+<!-- <div class="container mx-auto">
+    <div class="row">
+        <div class="col-12 m-2 p-2 bg-dark text-center">
+            
+        </div>
+    </div>
+</div> -->
+
+
+</main>
+
+<div class="container bg-light p-2 text-center  my-2 border rounded shadow-sm">
+    <a href="{% url 'update' student.id %}" class="btn btn-outline-danger btn-sm">
+        <i class="fa-regular fa-pen-to-square"></i> Edit
+    </a>
+    <button id="printPdf" onclick="printPdf()" type="button" class="btn btn-outline-success btn-sm">
+        <i class="fa-regular fa-file-pdf"></i> PDF
+    </button>
+    <a href="{% url 'search' %}" class="btn btn-outline-primary btn-sm"> <i class="fa-solid fa-magnifying-glass"></i> Search Again </a>
+</div>
+<div id="stdName" class=" d-none">{{ student.name }}</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<script>
+    async function printPdf() {
+        console.log('Printing');
+        var stdName = document.getElementById('stdName').innerText;
+
+        // Load jsPDF from the UMD module
+        const { jsPDF } = window.jspdf;
+
+        // Generate canvas from the HTML element
+        html2canvas(document.getElementById('getPdf')).then(function (canvas) {
+            // Get image data from the canvas
+            var img = canvas.toDataURL('image/png');
+
+            // Get dimensions
+            var wdt = canvas.width;
+            var hgt = canvas.height;
+            var ratio = hgt / wdt;
+
+            // Initialize jsPDF
+            var doc = new jsPDF('p', 'pt', 'a4');
+            var pageWidth = doc.internal.pageSize.width;
+            var pageHeight = pageWidth * ratio;
+
+            // Add the image to the PDF
+            doc.addImage(img, 'JPEG', 20, 20, pageWidth - 40, pageHeight - 40);
+
+            // Save the PDF
+            doc.save(`${stdName}.pdf`);
+        });
+    }
+</script>
+
+
+{% endblock %}
